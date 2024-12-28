@@ -90,7 +90,7 @@ public class CustomerFromController implements Initializable {
                     "root",
                     "12345678");
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT *FROM customer");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM customer");
             while (resultSet.next()){
                 customerList.add(new Customer(
                                 resultSet.getString(1),

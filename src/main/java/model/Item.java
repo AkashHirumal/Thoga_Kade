@@ -1,17 +1,18 @@
 package model;
 
 import lombok.*;
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 
 public class Item {
 
-    private String id;
-    private String name;
-    private Integer quantity;
-    private Double price;
+    private String code ;
     private String description;
+    private Double unitPrice;
+    private Integer qtyOnHand;
 
 
 
