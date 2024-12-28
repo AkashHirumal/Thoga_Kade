@@ -59,7 +59,7 @@ public class CustomerFromController implements Initializable {
 
     @FXML
     void btnRemoveOnAction(ActionEvent event) {
-
+        System.out.println("customer");
     }
 
     @FXML
