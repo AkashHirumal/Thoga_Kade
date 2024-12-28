@@ -20,16 +20,16 @@ import java.util.ResourceBundle;
 public class ItemFromController implements Initializable {
 
     @FXML
-    private TableColumn<?, ?> colCode;
+    private TableColumn colCode;
 
     @FXML
-    private TableColumn<?, ?> colDescription;
+    private TableColumn colDescription;
 
     @FXML
-    private TableColumn<?, ?> colQuantity;
+    private TableColumn colQuantity;
 
     @FXML
-    private TableColumn<?, ?> colUnitPrice;
+    private TableColumn colUnitPrice;
 
     @FXML
     private TableView<Item> tblItem;

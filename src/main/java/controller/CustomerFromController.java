@@ -1,5 +1,7 @@
 package controller;
 
+import db.DBConnection;
+import javafx.scene.control.Alert;
 import model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Item;
 
 import java.net.URL;
 import java.sql.*;
@@ -20,19 +23,19 @@ import java.util.ResourceBundle;
 public class CustomerFromController implements Initializable {
 
     @FXML
-    private TableColumn<?, ?> colId;
+    private TableColumn colId;
 
     @FXML
-    private TableColumn<?, ?> colName;
+    private TableColumn colName;
 
     @FXML
-    private TableColumn<?, ?> colAddress;
+    private TableColumn colAddress;
 
     @FXML
-    private TableColumn<?, ?> colSalary;
+    private TableColumn colSalary;
 
     @FXML
-    private TableView<Customer> tblCustomers;
+    private TableView tblCustomers;
 
     @FXML
     private TextField txtAddress;
@@ -48,13 +51,44 @@ public class CustomerFromController implements Initializable {
 
     @FXML
     void btnAddOnAction(ActionEvent event) {
-        customerList.add(new Customer(
+        if (txtId.getText().isEmpty() || txtName.getText().isEmpty() || txtAddress.getText().isEmpty() || txtSalary.getText().isEmpty()){
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Empty Fields");
+            errorAlert.setHeaderText("Empty Fields");
+            errorAlert.setContentText("Please fill all the required fields");
+            errorAlert.showAndWait();
+            return;
+        }
+
+        boolean isAdded = DBConnection.getInstance().getConnection().add(new Customer(
                 txtId.getText(),
                 txtName.getText(),
                 txtAddress.getText(),
                 Double.parseDouble(txtSalary.getText())
-        ));
-        loadTable();
+        )
+        );
+
+        if (isAdded) {
+            loadTable();
+            Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
+            errorAlert.setTitle("Item Added");
+            errorAlert.setHeaderText("Item Added Successfully.");
+            errorAlert.showAndWait();
+
+            clearFields();
+        } else {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Item Cant Added");
+            errorAlert.setHeaderText("Failed to add item.");
+            errorAlert.showAndWait();
+        }
+
+    }
+    public void clearFields() {
+        txtId.clear();
+        txtName.clear();
+        txtAddress.clear();
+        txtSalary.clear();
     }
 
     @FXML
@@ -115,5 +149,7 @@ public class CustomerFromController implements Initializable {
 
 
         tblCustomers.setItems(customerObservableList);
+
+        System.out.println(customerObservableList);
     }
 }
